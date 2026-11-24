@@ -88,6 +88,7 @@ AGENTS.md
   hooks.yaml          # pre/post tool hooks
   permissions.yaml    # allow/deny rules
   ignore              # paths the assistant must not touch
+  files/              # whole-file templates copied to the project root
   lessons/            # optional shared agent memory
 ```
 
@@ -123,21 +124,21 @@ Full walkthrough: [Teach your AI agents with lessons](https://samplexbro.github.
 
 [Ruler](https://github.com/intellectronica/ruler) and [rulesync](https://github.com/dyoshikawa/rulesync) both cover the common ground well, and rulesync supports more tools than AgentsMesh does. What is left to differentiate is what survives translation: links rewritten per target, a round-trip that loses nothing, a lockfile-backed drift gate, new tools addable without a core release, and a memory that learns.
 
-| Capability | AgentsMesh | Ruler | rulesync |
-|---|:---:|:---:|:---:|
-| Generate native config for many tools | ✅ | ✅ | ✅ |
-| Tools supported (counted from source) | 33 | ~31 | ~50 |
-| Import existing tool config back to source | ✅ | — | ✅ |
-| Convert one tool's config directly to another | ✅ | — | ✅ |
-| CI drift gate (non-zero exit on drift) | ✅ | partial | ✅ |
-| Lint before a target silently drops content | ✅ | partial | partial |
-| Self-serve MCP server (agent-operable config) | ✅ | — | ✅ |
-| `--json` output + typed programmatic API | ✅ | — | ✅ |
-| **Lossless round-trip** (re-import restores originals) | ✅ | — | partial |
-| **Cross-file links rewritten per target** | ✅ | — | — |
-| **Lockfile-verified drift + git-merge recovery** | ✅ | — | — |
-| **Target plugins: add a tool without a core release** | ✅ | — | — |
-| **Lessons: a shared agent memory that learns** | ✅ | — | — |
+| Capability                                             | AgentsMesh |  Ruler  | rulesync |
+| ------------------------------------------------------ | :--------: | :-----: | :------: |
+| Generate native config for many tools                  |     ✅     |   ✅    |    ✅    |
+| Tools supported (counted from source)                  |     33     |   ~31   |   ~50    |
+| Import existing tool config back to source             |     ✅     |    —    |    ✅    |
+| Convert one tool's config directly to another          |     ✅     |    —    |    ✅    |
+| CI drift gate (non-zero exit on drift)                 |     ✅     | partial |    ✅    |
+| Lint before a target silently drops content            |     ✅     | partial | partial  |
+| Self-serve MCP server (agent-operable config)          |     ✅     |    —    |    ✅    |
+| `--json` output + typed programmatic API               |     ✅     |    —    |    ✅    |
+| **Lossless round-trip** (re-import restores originals) |     ✅     |    —    | partial  |
+| **Cross-file links rewritten per target**              |     ✅     |    —    |    —     |
+| **Lockfile-verified drift + git-merge recovery**       |     ✅     |    —    |    —     |
+| **Target plugins: add a tool without a core release**  |     ✅     |    —    |    —     |
+| **Lessons: a shared agent memory that learns**         |     ✅     |    —    |    —     |
 
 <sub>Verified against each project's source and docs on 2026-09-19. Tool counts are counted from source, not marketing claims, and differ by how variants are tallied. Two newer projects solve adjacent problems rather than this one: [capa](https://github.com/infragate/capa) is a package manager and MCP gateway, and [Sentry's dotagents](https://github.com/getsentry/dotagents) manages skill and MCP dependencies without emitting instruction files. Detail and sources in the [alternatives guide](https://samplexbro.github.io/agentsmesh/reference/alternatives/); corrections welcome.</sub>
 
@@ -160,24 +161,24 @@ Built to be depended on: 12,000+ tests on Linux, macOS, and Windows CI, JSON-Sch
 
 ## Commands
 
-| Command | What it does |
-|---|---|
-| `init` | Scaffold `.agentsmesh/` and config (interactive wizard on a TTY) |
-| `generate` | Write native config for every enabled tool |
-| `check` | Fail when generated files drift from `.agentsmesh/.lock` (CI gate) |
-| `diff` | Preview what the next `generate` would change |
-| `import` | Pull an existing tool's config into `.agentsmesh/` |
-| `convert` | Convert one tool's config directly into another's |
-| `lint` | Validate canonical config against target constraints |
-| `watch` | Regenerate target files on save |
-| `merge` | Rebuild `.agentsmesh/.lock` after a Git merge conflict |
-| `matrix` | Print the feature and target support matrix |
-| `install` · `uninstall` · `installs` | Add, remove, and list community packs |
-| `refresh` | Re-fetch installed packs from their sources |
-| `plugin` | Add, list, or remove plugin-provided targets |
-| `target` | Scaffold a new target's source skeleton (for contributors) |
-| `lessons` | Query and capture agent memory |
-| `mcp` | Start the AgentsMesh MCP server (stdio) |
+| Command                              | What it does                                                       |
+| ------------------------------------ | ------------------------------------------------------------------ |
+| `init`                               | Scaffold `.agentsmesh/` and config (interactive wizard on a TTY)   |
+| `generate`                           | Write native config for every enabled tool                         |
+| `check`                              | Fail when generated files drift from `.agentsmesh/.lock` (CI gate) |
+| `diff`                               | Preview what the next `generate` would change                      |
+| `import`                             | Pull an existing tool's config into `.agentsmesh/`                 |
+| `convert`                            | Convert one tool's config directly into another's                  |
+| `lint`                               | Validate canonical config against target constraints               |
+| `watch`                              | Regenerate target files on save                                    |
+| `merge`                              | Rebuild `.agentsmesh/.lock` after a Git merge conflict             |
+| `matrix`                             | Print the feature and target support matrix                        |
+| `install` · `uninstall` · `installs` | Add, remove, and list community packs                              |
+| `refresh`                            | Re-fetch installed packs from their sources                        |
+| `plugin`                             | Add, list, or remove plugin-provided targets                       |
+| `target`                             | Scaffold a new target's source skeleton (for contributors)         |
+| `lessons`                            | Query and capture agent memory                                     |
+| `mcp`                                | Start the AgentsMesh MCP server (stdio)                            |
 
 Run `agentsmesh <command> --help` for flags, or see the [CLI reference](https://samplexbro.github.io/agentsmesh/cli/).
 

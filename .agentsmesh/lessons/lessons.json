@@ -3150,6 +3150,21 @@
         "t-cmd-7241113d"
       ]
     },
+    "git-hygiene-never-stage-mass-deletions-of": {
+      "createdAt": "2026-11-24",
+      "evidence": [
+        "files-feature-mass-delete"
+      ],
+      "rule": "Never stage mass deletions of tracked dogfood trees (.github/, .agents/, .agentsmesh/, .claude/) with a feature commit; restore them from the parent commit if a generate or sparse checkout wiped them",
+      "status": "active",
+      "topics": [
+        "git-hygiene"
+      ],
+      "triggers": [
+        "t-glob-e97f40fc",
+        "t-cmd-7c1c43ea"
+      ]
+    },
     "global-mode-global-scope-capability-resolution-has": {
       "createdAt": "2026-06-13",
       "evidence": [
@@ -10182,6 +10197,20 @@
         "t-cmd-742e7c60"
       ]
     },
+    "testing-put-new-unit-tests-under": {
+      "createdAt": "2026-11-24",
+      "evidence": [
+        "files-feature-tests-skipped"
+      ],
+      "rule": "Put new unit tests under tests/unit/ (or another vitest include glob); src/**/*.test.ts is not in vitest.config.ts include so colocated tests never run",
+      "status": "active",
+      "topics": [
+        "testing"
+      ],
+      "triggers": [
+        "t-glob-8ade9a3e"
+      ]
+    },
     "testing-temp-git-repos-in-tests": {
       "createdAt": "2026-09-23",
       "evidence": [],
@@ -11898,6 +11927,9 @@
     },
     "git-commit-hygiene": {
       "summary": "Staging/commit discipline: explicit pathspecs, verify staged set, /docs is gitignored (local specs)."
+    },
+    "git-hygiene": {
+      "summary": "Git staging and accidental deletions"
     },
     "global-mode": {
       "summary": "Global mode capability — rewriteGeneratedPath, mirrorGlobalPath, globalCapabilities, homedir scope guards, scope-aware loaders."
@@ -14225,6 +14257,10 @@
     "t-glob-e9606afe": {
       "kind": "file_glob",
       "pattern": ".agentsmesh/skills/**"
+    },
+    "t-glob-e97f40fc": {
+      "kind": "file_glob",
+      "pattern": "**/.gitignore"
     },
     "t-glob-e9f9f003": {
       "kind": "file_glob",

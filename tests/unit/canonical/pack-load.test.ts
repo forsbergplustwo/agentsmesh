@@ -26,6 +26,7 @@ function writePack(
     rules?: Record<string, string>;
     commands?: Record<string, string>;
     skills?: Record<string, string>;
+    files?: Record<string, string>;
   } = {},
 ): void {
   const packDir = join(packsDir, name);
@@ -71,6 +72,14 @@ function writePack(
         `---\ndescription: ${skillName} skill\n---\n\n${body}`,
         'utf-8',
       );
+    }
+  }
+
+  if (resources.files) {
+    for (const [rel, body] of Object.entries(resources.files)) {
+      const abs = join(packDir, 'files', rel);
+      mkdirSync(join(abs, '..'), { recursive: true });
+      writeFileSync(abs, body, 'utf-8');
     }
   }
 }
@@ -148,5 +157,30 @@ describe('loadPacksCanonical', () => {
     // no pack.yaml
     const result = await loadPacksCanonical(tmpDir);
     expect(result.rules).toEqual([]);
+  });
+
+  it('loads copied files from a pack when features includes files', async () => {
+    writePack(
+      'tooling',
+      { features: ['files'] },
+      { files: { '.gitignore': 'node_modules\n', 'mise.toml': 'x = 1\n' } },
+    );
+    const result = await loadPacksCanonical(tmpDir);
+    expect(result.files?.map((f) => f.path).sort()).toEqual(['.gitignore', 'mise.toml']);
+    expect(result.files?.find((f) => f.path === 'mise.toml')?.content).toBe('x = 1\n');
+  });
+
+  it('drops pack files when features omits files', async () => {
+    writePack(
+      'tooling',
+      { features: ['rules'] },
+      {
+        rules: { 'keep.md': 'ok' },
+        files: { 'mise.toml': 'x = 1\n' },
+      },
+    );
+    const result = await loadPacksCanonical(tmpDir);
+    expect(result.files).toBeUndefined();
+    expect(result.rules).toHaveLength(1);
   });
 });
