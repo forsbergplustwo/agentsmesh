@@ -154,22 +154,22 @@
     "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.4"
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@clack/prompts": "^1.6.0",
     "@modelcontextprotocol/sdk": "^1.32.2",
     "chokidar": "^5.0.0",
     "diff": "8.0.4",
-    "picomatch": "^4.0.4",
-    "smol-toml": "^1.8.0",
+    "picomatch": "^4.0.7",
+    "smol-toml": "^1.9.0",
     "tar": "7.5.22",
     "yaml": "^2.8.3",
     "zod": "^4.6.7"
   },
   "pnpm": {
     "overrides": {
-      "hono": "^4.12.25",
+      "hono": "^4.13.19",
       "flatted": "^3.4.2",
       "ip-address": "^10.3.1",
       "fast-uri": "^3.1.7",
