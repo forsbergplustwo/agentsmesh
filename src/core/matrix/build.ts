@@ -53,18 +53,22 @@ export function buildCompatibilityMatrix(
         count = permissionEntries(canonical.permissions).length > 0 ? 1 : 0;
         label = 'permissions';
         break;
+      case 'files':
+        // Target-independent whole-file copies; still listed so enabled configs show up.
+        count = canonical.files?.length ?? 0;
+        label = count > 0 ? `files (${count})` : 'files';
+        break;
       default:
         continue;
     }
 
     const support: Record<string, SupportLevel> = {};
     for (const t of targets) {
-      support[t] = getEffectiveTargetSupportLevel(
-        t,
-        featureId as keyof TargetCapabilities,
-        config,
-        scope,
-      );
+      // Copied files land at the project root for every target equally.
+      support[t] =
+        featureId === 'files'
+          ? 'native'
+          : getEffectiveTargetSupportLevel(t, featureId as keyof TargetCapabilities, config, scope);
     }
 
     rows.push({ feature: label, count, support });

@@ -24,6 +24,7 @@ const FEATURE_LABEL: Record<string, string> = {
   hooks: 'Hooks',
   ignore: 'Ignore',
   permissions: 'Permissions',
+  files: 'Files',
 };
 
 /** Drop a trailing count parenthetical — "commands (9)" / "mcp (3 servers)" → base. */

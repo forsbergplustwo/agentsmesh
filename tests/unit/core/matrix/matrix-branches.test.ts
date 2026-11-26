@@ -71,6 +71,14 @@ describe('formatVerboseDetails — empty/edge branches', () => {
     });
     expect(result).not.toContain('mcp:');
   });
+
+  it('emits files paths when copied files are present', () => {
+    const result = formatVerboseDetails({
+      ...baseCanonical(),
+      files: [{ path: '.gitignore', content: 'dist\n' }],
+    });
+    expect(result).toContain('files: .gitignore');
+  });
 });
 
 describe('coloredSymbol / color-decision branches', () => {
