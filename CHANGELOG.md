@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.44.0
+
+### Minor Changes
+
+- c3e1a81: New feature: Copy whole project files from .agentsmesh/files/ onto the project root so shared tooling stays consistent across projects..
+
 ## 0.43.1
 
 ### Patch Changes
