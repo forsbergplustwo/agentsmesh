@@ -2191,6 +2191,20 @@
         "t-glob-9f0a5990"
       ]
     },
+    "generate-when-adding-a-target-independent": {
+      "createdAt": "2026-11-24",
+      "evidence": [
+        "none"
+      ],
+      "rule": "When adding a target-independent feature (e.g. files), give buildCompatibilityMatrix an explicit case and FEATURE_LABEL entry so the generate console table shows it — default continue silently drops unknown feature IDs.",
+      "status": "active",
+      "topics": [
+        "generate"
+      ],
+      "triggers": [
+        "t-glob-11434a35"
+      ]
+    },
     "generate-when-an-emission-helper-takes": {
       "createdAt": "2026-09-03",
       "evidence": [
@@ -12729,6 +12743,10 @@
     "t-glob-1120a27d": {
       "kind": "file_glob",
       "pattern": "scripts/capabilities-audit.ts"
+    },
+    "t-glob-11434a35": {
+      "kind": "file_glob",
+      "pattern": "src/core/matrix/**"
     },
     "t-glob-11717c97": {
       "kind": "file_glob",

@@ -470,6 +470,35 @@ describe('buildCompatibilityMatrix', () => {
     expect(rows.find((r) => r.feature === 'hooks')?.feature).toBe('hooks');
   });
 
+  it('includes files as native for every target when enabled', () => {
+    const config: ValidatedConfig = {
+      ...baseConfig,
+      targets: ['claude-code', 'cursor'],
+      features: ['files'],
+    };
+    const canonical: CanonicalFiles = {
+      ...emptyCanonical,
+      files: [
+        { path: '.gitignore', content: 'dist\n' },
+        { path: 'mise.toml', content: 'x = 1\n' },
+      ],
+    };
+    const rows = buildCompatibilityMatrix(config, canonical);
+    expect(rows).toEqual([
+      {
+        feature: 'files (2)',
+        count: 2,
+        support: { 'claude-code': 'native', cursor: 'native' },
+      },
+    ]);
+  });
+
+  it('uses plain files label when no copied files are loaded', () => {
+    const config: ValidatedConfig = { ...baseConfig, features: ['files'] };
+    const rows = buildCompatibilityMatrix(config, { ...emptyCanonical });
+    expect(rows.find((r) => r.feature === 'files')?.count).toBe(0);
+  });
+
   it('target not in supportMap gets none level', () => {
     const config: ValidatedConfig = {
       ...baseConfig,
@@ -553,6 +582,7 @@ describe('formatVerboseDetails', () => {
       permissions: { allow: ['Read'], deny: [] },
       hooks: { PostToolUse: [{ matcher: 'Write', command: 'prettier', type: 'command' }] },
       ignore: ['node_modules'],
+      files: [{ path: 'mise.toml', content: 'x = 1\n' }],
     };
     const out = formatVerboseDetails(canonical);
     expect(out).toContain('rules:');
@@ -563,6 +593,7 @@ describe('formatVerboseDetails', () => {
     expect(out).toContain('hooks:');
     expect(out).toContain('ignore:');
     expect(out).toContain('permissions:');
+    expect(out).toContain('files: mise.toml');
   });
 
   it('returns empty string when canonical empty', () => {

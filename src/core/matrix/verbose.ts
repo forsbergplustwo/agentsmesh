@@ -35,6 +35,9 @@ export function formatVerboseDetails(canonical: CanonicalFiles): string {
   if (permissionEntries(canonical.permissions).length > 0) {
     lines.push('permissions: .agentsmesh/permissions.yaml');
   }
+  if (canonical.files && canonical.files.length > 0) {
+    lines.push(`files: ${canonical.files.map((f) => f.path).join(', ')}`);
+  }
   if (lines.length === 0) return '';
   return '\nPer-file details:\n' + lines.join('\n') + '\n';
 }
